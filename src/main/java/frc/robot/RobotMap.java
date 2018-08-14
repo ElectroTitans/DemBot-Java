@@ -18,4 +18,5 @@ public class RobotMap {
   public static int kLeftRearSpark   = 1;
   public static int kRightFrontSpark = 2;
   public static int kRightRearSpark  = 3;
+
 }
