@@ -7,8 +7,10 @@
 
 package frc.robot;
 
+import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,7 +20,8 @@ public class OI {
   private Joystick joyBoyDriveL = null;
   private Joystick joyBoyDriveR = null;
   private Joystick joyboyGamer = null;
-
+  private JoystickButton turboButton = null;
+  
   public enum InputMode {
     SPLIT_JOYSTICK, GAMER_JOYSTICK, GAMER_RACING
   };
@@ -31,10 +34,15 @@ public class OI {
     case SPLIT_JOYSTICK:
       joyBoyDriveL = new Joystick(0);
       joyBoyDriveR = new Joystick(1);
+
+
       break;
 
     case GAMER_JOYSTICK:
       joyboyGamer = new Joystick(0);
+      turboButton = new JoystickButton(joyboyGamer, 7);
+      turboButton.whenPressed(new SetDriveTurboCommand(true));
+      turboButton.whenReleased(new SetDriveTurboCommand(false));
     case GAMER_RACING:
       joyboyGamer = new Joystick(0);
       break;
@@ -49,7 +57,7 @@ public class OI {
       break;
 
     case GAMER_JOYSTICK:
-      val = joyboyGamer.getX(Hand.kRight);
+      val = joyboyGamer.getZ(); // Idk
       break;
 
     case GAMER_RACING:
@@ -72,6 +80,24 @@ public class OI {
 
     case GAMER_RACING:
       val = (joyboyGamer.getRawAxis(2) * -1) + (joyboyGamer.getRawAxis(3) );
+      break;
+    }
+    return val;
+  }
+
+  public boolean getAltDrive(){
+    boolean val = false;
+    switch (currentMode) {
+    case SPLIT_JOYSTICK:
+      val = joyBoyDriveL.getRawButton(3);
+      break;
+
+    case GAMER_JOYSTICK:
+      val = joyboyGamer.getRawButton(4);
+      break;
+
+    case GAMER_RACING:
+      val = joyboyGamer.getRawButton(4);
       break;
     }
     return val;

@@ -28,6 +28,7 @@ public class DriveTrain extends Subsystem {
   private SpeedControllerGroup rightGroup;
 
   private DifferentialDrive drive;
+  private double speedMultiplier;
 
   public void init(){
     lfSpark = new Spark(RobotMap.kLeftFrontSpark);
@@ -45,9 +46,20 @@ public class DriveTrain extends Subsystem {
   public void initDefaultCommand() {
     setDefaultCommand(new JoystickDriveCommand());
   }
+  public void setTurbo(boolean val){
+    if(val){
+      speedMultiplier = 1.0;
+    }else{
+      speedMultiplier = 0.3;
+    }
+  }
+
+  public void setCurvatureDrive(double speed, double turn, boolean classic){
+    drive.curvatureDrive(speed * speedMultiplier, turn , classic);
+  }
 
   public void setArcadeDrive(double throttle, double turn){
-    drive.arcadeDrive(throttle, turn);
+    drive.arcadeDrive(throttle * speedMultiplier, turn * speedMultiplier);
   }
 
 
