@@ -19,115 +19,38 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   private Joystick joyBoyDriveL = null;
   private Joystick joyBoyDriveR = null;
+
   private Joystick joyboyGamer = null;
-  private JoystickButton turboButton = null;
-  
-  public enum InputMode {
-    SPLIT_JOYSTICK, GAMER_JOYSTICK, GAMER_RACING
-  };
-
-  private InputMode currentMode;
-
-  public OI(InputMode mode) {
-    currentMode = mode;
-    switch (currentMode) {
-    case SPLIT_JOYSTICK:
-      joyBoyDriveL = new Joystick(0);
-      joyBoyDriveR = new Joystick(1);
 
 
-      break;
+  private JoystickButton buttonTurbo = null;
+  private JoystickButton buttonIntakeClose = null;
+  private JoystickButton buttonIntakeOpen  = null;
+  private JoystickButton buttonIntakeIn    = null;
+  private JoystickButton buttonIntakeOut   = null;
 
-    case GAMER_JOYSTICK:
-      joyboyGamer = new Joystick(0);
-      turboButton = new JoystickButton(joyboyGamer, 7);
-      turboButton.whenPressed(new SetDriveTurboCommand(true));
-      turboButton.whenReleased(new SetDriveTurboCommand(false));
-    case GAMER_RACING:
-      joyboyGamer = new Joystick(0);
-      break;
-    }
+  public OI() {
+    joyBoyDriveL = new Joystick(0);
+    joyBoyDriveR = new Joystick(1);
+    joyboyGamer  = new Joystick(2);
+
+    buttonTurbo  = new JoystickButton(joyBoyDriveL, 0);
+
+    buttonIntakeIn = new JoystickButton(joyboyGamer, 1);
+    buttonIntakeOut = new JoystickButton(joyboyGamer, 2);
+    
+    
   }
 
-  public double getTurn() {
-    double val = 0;
-    switch (currentMode) {
-    case SPLIT_JOYSTICK:
-      val = joyBoyDriveR.getX();
-      break;
-
-    case GAMER_JOYSTICK:
-      val = joyboyGamer.getZ(); // Idk
-      break;
-
-    case GAMER_RACING:
-      val = joyboyGamer.getX(Hand.kRight);
-      break;
-    }
-    return val;
+  public double getThrottle(){
+    return 0;
   }
 
-  public double getThrottle() {
-    double val = 0;
-    switch (currentMode) {
-    case SPLIT_JOYSTICK:
-      val = joyBoyDriveL.getY();
-      break;
-
-    case GAMER_JOYSTICK:
-      val = joyboyGamer.getY(Hand.kLeft);
-      break;
-
-    case GAMER_RACING:
-      val = (joyboyGamer.getRawAxis(2) * -1) + (joyboyGamer.getRawAxis(3) );
-      break;
-    }
-    return val;
+  public double getTurn(){
+    return 0;
   }
 
-  public boolean getAltDrive(){
-    boolean val = false;
-    switch (currentMode) {
-    case SPLIT_JOYSTICK:
-      val = joyBoyDriveL.getRawButton(3);
-      break;
-
-    case GAMER_JOYSTICK:
-      val = joyboyGamer.getRawButton(4);
-      break;
-
-    case GAMER_RACING:
-      val = joyboyGamer.getRawButton(4);
-      break;
-    }
-    return val;
+  public double getSuperStructureRotate(){
+    return 0;
   }
-
-  //// CREATING BUTTONS
-  // One type of button is a joystick button which is any button on a
-  //// joystick.
-  // You create one by telling it which joystick it's on and which button
-  // number it is.
-  // Joystick stick = new Joystick(port);
-  // Button button = new JoystickButton(stick, buttonNumber);
-
-  // There are a few additional built in buttons you can use. Additionally,
-  // by subclassing Button you can create custom triggers and bind those to
-  // commands the same as any other Button.
-
-  //// TRIGGERING COMMANDS WITH BUTTONS
-  // Once you have a button, it's trivial to bind it to a button in one of
-  // three ways:
-
-  // Start the command when the button is pressed and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenPressed(new ExampleCommand());
-
-  // Run the command while the button is being held down and interrupt it once
-  // the button is released.
-  // button.whileHeld(new ExampleCommand());
-
-  // Start the command when the button is released and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenReleased(new ExampleCommand());
 }

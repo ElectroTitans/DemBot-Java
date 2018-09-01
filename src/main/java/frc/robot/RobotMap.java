@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import javax.crypto.interfaces.PBEKey;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -18,5 +20,10 @@ public class RobotMap {
   public static int kLeftRearSpark   = 1;
   public static int kRightFrontSpark = 2;
   public static int kRightRearSpark  = 3;
+  public static int kLeftSuperSpark  = 4;
+  public static int kRightSuperSpark = 5;
+  public static int kIntakeSpark     = 6;
 
+  public static int kPCMIntakeClose  = 0;
+  public static int kPCMIntakeOpen   = 1;
 }
